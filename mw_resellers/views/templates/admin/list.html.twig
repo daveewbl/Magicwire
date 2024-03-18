@@ -1,0 +1,22 @@
+{% extends '@PrestaShop/Admin/layout.html.twig' %}
+
+{% block content %}
+    <div id="app"></div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        window.items = {{ items|json_encode|raw }};
+        window.itemSkeleton = {{ itemSkeleton|json_encode|raw }};
+        window.languages = {{ languages|json_encode|raw }};
+        window.resellerGroups = {{ resellerGroups|json_encode|raw }}
+        window.postUrls = {
+            createOrUpdate: '{{ path('mw_resellers_ajax_create_update')|escape('js') }}',
+            updateActiveState: '{{ path('mw_resellers_ajax_update_active_state')|escape('js') }}',
+            delete: '{{ path('mw_resellers_ajax_delete')|escape('js') }}',
+        };
+    </script>
+    <script src="/{{ scripts.chunkVendorsJs }}" defer async></script>
+    <script src="/{{ scripts.vueAppJs }}" defer async></script>
+{% endblock %}
+

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>mw_resellers</name>
+	<displayName><![CDATA[Rivenditori]]></displayName>
+	<version><![CDATA[1.0.0]]></version>
+	<description><![CDATA[Mostra una pagina per ogni gruppo di rivenditori, con lista e mappa integrata]]></description>
+	<author><![CDATA[Weble]]></author>
+	<tab><![CDATA[front_office_features]]></tab>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+</module>

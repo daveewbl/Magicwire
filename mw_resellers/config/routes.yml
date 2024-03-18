@@ -1,0 +1,24 @@
+mw_resellers_list:
+  path: mw_resellers
+  methods: [GET]
+  defaults:
+    _controller: 'Weble\Module\Resellers\Controller\ResellerController::listAction'
+    _legacy_controller: MwResellersList
+
+mw_resellers_ajax_create_update:
+  path: mw_resellers/create_update
+  methods: [POST]
+  defaults:
+    _controller: 'Weble\Module\Resellers\Controller\AjaxResellerController::creteOrUpdateReseller'
+
+mw_resellers_ajax_update_active_state:
+  path: mw_resellers/update_active_state
+  methods: [POST]
+  defaults:
+    _controller: 'Weble\Module\Resellers\Controller\AjaxResellerController::updateItemActiveState'
+
+mw_resellers_ajax_delete:
+  path: mw_resellers/delete
+  methods: [ POST ]
+  defaults:
+    _controller: 'Weble\Module\Resellers\Controller\AjaxResellerController::deleteReseller'

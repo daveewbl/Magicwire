@@ -1,0 +1,25 @@
+{
+  "name": "weble/mw_resellers",
+  "description": "Mostra una pagina per ogni gruppo di rivenditori, con lista e mappa integrata",
+  "authors": [
+    {
+      "name": "davide@weble",
+      "email": "davide@weble.it"
+    }
+  ],
+  "require": {
+    "php": ">=7.4"
+  },
+  "autoload": {
+    "psr-4": {
+      "Weble\\Module\\Resellers\\": "src/"
+    }
+  },
+  "config": {
+    "preferred-install": "dist",
+    "prepend-autoloader": false
+  },
+  "type": "prestashop-module",
+  "author": "Weble",
+  "license": "<???>"
+}
