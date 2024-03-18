@@ -34,8 +34,7 @@ class ResellerController extends FrameworkBundleAdminController
             'languages' => $this->getLanguages(),
             'resellerGroups' => $this->getResellerGroups(),
             'scripts' => [
-                'vueAppJs' => "modules/mw_resellers/views/js/app.js",
-                'chunkVendorsJs' => "modules/mw_resellers/views/js/chunk-vendors.js",
+                'vueAppJs' => "modules/mw_resellers/views/js/back.js",
             ]
         ]);
     }

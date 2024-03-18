@@ -1,6 +1,6 @@
 <script>
-import InputSwitch from "@/components/InputSwitch.vue";
 import axios from "axios";
+import InputSwitch from "../components/InputSwitch.vue";
 
 const urls = window.postUrls;
 
@@ -36,6 +36,28 @@ export default {
             (this.error = `${response.status} - ${response.data}`)
         );
     },
+
+    filterItems(query) {
+      query = query.target.value;
+
+      if (!query) {
+        this.setItems(
+          this.items.map((item) => {
+            item.isVisible = true;
+            return item;
+          })
+        );
+      }
+
+      this.setItems(
+        this.items.map((item) => {
+          item.isVisible = item.name
+            .toLowerCase()
+            .includes(query.toLowerCase());
+          return item;
+        })
+      );
+    },
   },
 
   inject: ["setCurrentlyEditing", "setCurrentView", "items", "setItems"],
@@ -46,7 +68,13 @@ export default {
   <div class="card">
     <div class="card-header">
       <div class="row">
-        <div class="col"></div>
+        <div class="col">
+          <input
+            class="form-control col-3"
+            placeholder="Cerca..."
+            @input="filterItems"
+          />
+        </div>
         <div class="col-auto">
           <button class="btn btn-primary" @click="$emit('changeView', 'Edit')">
             <i class="material-icons">add_circle_outline</i>
@@ -74,7 +102,10 @@ export default {
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(item, key) in items" :key="key">
+          <tr
+            v-for="(item, key) in items.filter((i) => i.isVisible)"
+            :key="key"
+          >
             <td v-text="item.id"></td>
             <td v-text="item.name"></td>
             <td v-text="item.address"></td>

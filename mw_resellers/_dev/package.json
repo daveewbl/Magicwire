@@ -2,27 +2,22 @@
   "name": "mw_resellers",
   "version": "1.0.0",
   "private": true,
-  "scripts": {
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "dev": "vue-cli-service build --no-clean --mode development --watch"
-  },
+  "scripts": {},
   "dependencies": {
     "@fawmi/vue-google-maps": "^0.9.79",
     "@vueuse/components": "^10.1.2",
     "@vueuse/core": "^10.1.2",
     "axios": "^1.4.0",
-    "vue": "^3.3.2",
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
+    "@vue/compiler-sfc": "^3.4.21",
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
+    "laravel-mix": "^6.0.49",
     "prettier": "^2.4.1",
-    "vue-template-compiler": "^2.6.14"
+    "vue-loader": "^16.8.3"
   }
 }

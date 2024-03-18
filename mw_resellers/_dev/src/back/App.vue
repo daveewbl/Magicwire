@@ -1,7 +1,7 @@
 <script>
-import List from "@/views/List.vue";
-import Edit from "@/views/Edit.vue";
 import { computed } from "vue";
+import List from "./views/List.vue";
+import Edit from "./views/Edit.vue";
 
 function getActiveLanguage() {
   return window.languages.find((language) => language.isContextLang);
@@ -14,7 +14,10 @@ export default {
   data() {
     return {
       view: "List",
-      items: items,
+      items: items.map((item) => {
+        item.isVisible = true;
+        return item;
+      }),
       currentlyEditing: null,
     };
   },

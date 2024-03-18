@@ -4,7 +4,7 @@ use Doctrine\ORM\EntityManager;
 use Weble\Module\Resellers\Entity\Reseller;
 use Weble\Module\Resellers\Entity\ResellerGroup;
 
-class Mw_resellersItalyModuleFrontController extends ModuleFrontControllerCore
+class Mw_resellersSpainModuleFrontController extends ModuleFrontControllerCore
 {
     public function initContent()
     {
@@ -14,7 +14,7 @@ class Mw_resellersItalyModuleFrontController extends ModuleFrontControllerCore
         $em = $this->get('doctrine.orm.entity_manager');
         $resellerGroupRepository = $em->getRepository(ResellerGroup::class);
 
-        $group = $resellerGroupRepository->findOneBy(['zone' => 'it']);
+        $group = $resellerGroupRepository->findOneBy(['zone' => 'sp']);
         $resellers = array_map(
             fn (Reseller $reseller) => $reseller->toArray(),
             $group->getResellers()->filter(fn (Reseller $reseller) => $reseller->isActive())->toArray());

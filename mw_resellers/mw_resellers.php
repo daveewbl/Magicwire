@@ -87,8 +87,6 @@ class Mw_resellers extends Module
             'id_language' => $this->context->language->id,
         ];
 
-        dump($this->context->link->getModuleLink($this->name, 'italy'));
-
         return $helper->generateForm([$this->getConfigForm()]);
     }
 
@@ -111,6 +109,20 @@ class Mw_resellers extends Module
                     [
                         'col' => 6,
                         'type' => 'text',
+                        'name' => strtoupper($this->name) . '_IT_CENTER_COORDS_LAT',
+                        'desc' => 'Latitudine del centro mappa al caricamento della pagina',
+                        'label' => $this->l('Latitudine Centro Mappa Italia')
+                    ],
+                    [
+                        'col' => 6,
+                        'type' => 'text',
+                        'name' => strtoupper($this->name) . '_IT_CENTER_COORDS_LNG',
+                        'desc' => 'Longitudine del centro mappa al caricamento della pagina',
+                        'label' => $this->l('Longitudine Centro Mappa Italia')
+                    ],
+                    [
+                        'col' => 6,
+                        'type' => 'text',
                         'name' => strtoupper($this->name) . '_SP',
                         'label' => $this->l('Nome Gruppo Spagna'),
                         'lang' => true,
@@ -118,9 +130,37 @@ class Mw_resellers extends Module
                     [
                         'col' => 6,
                         'type' => 'text',
+                        'name' => strtoupper($this->name) . '_SP_CENTER_COORDS_LAT',
+                        'desc' => 'Latitudine del centro mappa al caricamento della pagina',
+                        'label' => $this->l('Latitudine Centro Mappa Spagna')
+                    ],
+                    [
+                        'col' => 6,
+                        'type' => 'text',
+                        'name' => strtoupper($this->name) . '_SP_CENTER_COORDS_LNG',
+                        'desc' => 'Longitudine del centro mappa al caricamento della pagina',
+                        'label' => $this->l('Longitudine Centro Mappa Spagna')
+                    ],
+                    [
+                        'col' => 6,
+                        'type' => 'text',
                         'name' => strtoupper($this->name) . '_WW',
                         'label' => $this->l('Nome Gruppo Mondo'),
                         'lang' => true,
+                    ],
+                    [
+                        'col' => 6,
+                        'type' => 'text',
+                        'name' => strtoupper($this->name) . '_WW_CENTER_COORDS_LAT',
+                        'desc' => 'Latitudine del centro mappa al caricamento della pagina',
+                        'label' => $this->l('Latitudine Centro Mappa Mondo')
+                    ],
+                    [
+                        'col' => 6,
+                        'type' => 'text',
+                        'name' => strtoupper($this->name) . '_WW_CENTER_COORDS_LNG',
+                        'desc' => 'Longitudine del centro mappa al caricamento della pagina',
+                        'label' => $this->l('Longitudine Centro Mappa Mondo')
                     ],
                 ],
                 'submit' => [
@@ -144,20 +184,21 @@ class Mw_resellers extends Module
         $spGroup = $resellerGroupRepository->findOneBy(['zone' => 'sp']);
         $wwGroup = $resellerGroupRepository->findOneBy(['zone' => 'ww']);
 
-        foreach ($this->getConfigForm()['form']['input'] as $field) {
-            if ($field['lang']) {
-                $values[$field['name']] = Configuration::getConfigInMultipleLangs($field['name']);
-            } else {
-                $values[$field['name']] = Configuration::get($field['name']);
-            }
-        }
-
         $values = [];
         foreach (LanguageCore::getLanguages() as $language) {
             $values[strtoupper($this->name) . "_IT"][$language['id_lang']] = $itGroup->getName($language['iso_code']);
             $values[strtoupper($this->name) . "_SP"][$language['id_lang']] = $spGroup->getName($language['iso_code']);
             $values[strtoupper($this->name) . "_WW"][$language['id_lang']] = $wwGroup->getName($language['iso_code']);
         }
+
+        $values[strtoupper($this->name) . "_IT_CENTER_COORDS_LAT"] = $itGroup->getMapCenterByDirection('lat');
+        $values[strtoupper($this->name) . "_IT_CENTER_COORDS_LNG"] = $itGroup->getMapCenterByDirection('lng');
+
+        $values[strtoupper($this->name) . "_SP_CENTER_COORDS_LAT"] = $spGroup->getMapCenterByDirection('lat');
+        $values[strtoupper($this->name) . "_SP_CENTER_COORDS_LNG"] = $spGroup->getMapCenterByDirection('lng');
+
+        $values[strtoupper($this->name) . "_WW_CENTER_COORDS_LAT"] = $wwGroup->getMapCenterByDirection('lat');
+        $values[strtoupper($this->name) . "_WW_CENTER_COORDS_LNG"] = $wwGroup->getMapCenterByDirection('lng');
 
         return $values;
     }
@@ -182,6 +223,15 @@ class Mw_resellers extends Module
             $spGroup->setName(Tools::getValue(strtoupper($this->name) . "_SP_{$language['id_lang']}"), $language['iso_code']);
             $wwGroup->setName(Tools::getValue(strtoupper($this->name) . "_WW_{$language['id_lang']}"), $language['iso_code']);
         }
+
+        $itGroup->setMapCenter(Tools::getValue(strtoupper($this->name) . "_IT_CENTER_COORDS_LAT", null), 'lat');
+        $itGroup->setMapCenter(Tools::getValue(strtoupper($this->name) . "_IT_CENTER_COORDS_LNG", null), 'lng');
+
+        $spGroup->setMapCenter(Tools::getValue(strtoupper($this->name) . "_SP_CENTER_COORDS_LAT", null), 'lat');
+        $spGroup->setMapCenter(Tools::getValue(strtoupper($this->name) . "_SP_CENTER_COORDS_LNG", null), 'lng');
+
+        $wwGroup->setMapCenter(Tools::getValue(strtoupper($this->name) . "_WW_CENTER_COORDS_LAT", null), 'lat');
+        $wwGroup->setMapCenter(Tools::getValue(strtoupper($this->name) . "_WW_CENTER_COORDS_LNG", null), 'lng');
 
         $em->flush();
     }

@@ -52,6 +52,7 @@ class Installer
     `id_reseller_group` int(11) NOT NULL AUTO_INCREMENT,
     `name` text NOT NULL,
     `zone` text,
+    `map_center` text,
     `active` tinyint(1),
     PRIMARY KEY  (`id_reseller_group`)
     ) ENGINE=' . _MYSQL_ENGINE_ . ' DEFAULT CHARSET=utf8;";

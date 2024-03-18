@@ -33,6 +33,11 @@ class ResellerGroup
     private string $zone;
 
     /**
+     * @ORM\Column(type="json")
+     */
+    private array $mapCenter;
+
+    /**
      * @ORM\Column(type="boolean")
      */
     private bool $active = true;
@@ -52,6 +57,11 @@ class ResellerGroup
             $this->name[$lang->getIsoCode()] = null;
         }
 
+        $this->mapCenter = [
+            'lat' => null,
+            'lng' => null
+        ];
+
         $this->resellers = new ArrayCollection();
     }
 
@@ -70,6 +80,30 @@ class ResellerGroup
     {
         if (array_key_exists($langIsoCode, $this->name)) {
             return $this->name[$langIsoCode];
+        }
+
+        return null;
+    }
+
+    public function setMapCenter(string $value, string $direction): ResellerGroup
+    {
+        if (empty($value)) {
+            $value = null;
+        }
+
+        $this->mapCenter[$direction] = $value;
+        return $this;
+    }
+
+    public function getMapCenter(): array
+    {
+        return $this->mapCenter;
+    }
+
+    public function getMapCenterByDirection($direction): ?float
+    {
+        if (array_key_exists($direction, $this->mapCenter)) {
+            return $this->mapCenter[$direction] !== null ? (float) $this->mapCenter[$direction] : null;
         }
 
         return null;
@@ -116,6 +150,7 @@ class ResellerGroup
             'id' => $this->getId(),
             'name' => $this->getName($langIsoCode),
             'zone' => $this->getZone(),
+            'map_center' => $this->getMapCenter(),
             'active' => $this->isActive()
         ];
     }
@@ -134,6 +169,7 @@ class ResellerGroup
             'id',
             'name',
             'zone',
+            'map_center',
             'active'
         ];
     }

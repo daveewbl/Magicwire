@@ -1,8 +1,8 @@
 <script>
-import InputField from "@/components/InputField.vue";
-import InputSwitch from "@/components/InputSwitch.vue";
 import axios from "axios";
-import SelectField from "@/components/SelectField.vue";
+import SelectField from "../components/SelectField.vue";
+import InputSwitch from "../components/InputSwitch.vue";
+import InputField from "../components/InputField.vue";
 
 const itemSkeleton = window.itemSkeleton;
 const urls = window.postUrls;
